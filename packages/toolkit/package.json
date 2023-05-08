@@ -1,0 +1,41 @@
+{
+  "name": "@incognito/toolkit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "clean": "rimraf .turbo && rimraf node_modules && rimraf dist",
+    "build": "tsc -p .",
+    "postbuild": "copyfiles -u 1 src/**/*.gql src/**/**/*.gql dist",
+    "start": "nest start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "NODE_OPTIONS=--no-experimental-fetch jest --runInBand --detectOpenHandles --forceExit --verbose",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@alicloud/pop-core": "1.7.13",
+    "@aws-sdk/client-s3": "3.350.0",
+    "@aws-sdk/client-sns": "3.350.0",
+    "@aws-sdk/lib-storage": "3.350.0",
+    "@aws-sdk/s3-request-presigner": "3.350.0",
+    "@sapphire/snowflake": "3.5.1",
+    "graphql-fields": "2.0.3",
+    "jsonwebtoken": "9.0.0",
+    "lodash": "4.17.21",
+    "rxjs": "7.8.1"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^9.4.2",
+    "@nestjs/core": "^9.4.2",
+    "@nestjs/microservices": "^9.4.2",
+    "@nestjs/passport": "^9.0.3",
+    "graphql": "^16.6.0",
+    "mongoose": "^7.0.3",
+    "passport-jwt": "^4.0.1"
+  }
+}

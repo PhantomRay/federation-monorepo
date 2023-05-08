@@ -1,0 +1,15 @@
+sandbox:
+  enabled: true
+homepage:
+  enabled: false
+supergraph:
+  introspection: true
+  path: /graphql
+  listen: 0.0.0.0:4000
+# include_subgraph_errors:
+#   all: true
+# plugins:
+#   experimental.expose_query_plan: true
+override_subgraph_url:
+  users: http://192.168.86.62:4001/graphql
+  posts: http://192.168.86.62:4002/graphql

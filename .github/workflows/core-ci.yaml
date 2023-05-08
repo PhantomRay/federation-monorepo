@@ -1,0 +1,36 @@
+name: '[core] Lint and test'
+
+on:
+  push:
+    paths:
+      - 'apps/core/**'
+      - '.github/workflows/core-*.yaml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+          cache-dependency-path: './pnpm-lock.yaml'
+
+      - run: pnpm install --ignore-scripts
+      - run: pnpm --filter core lint
+      - run: pnpm --filter core test
+        env:
+          CI: true

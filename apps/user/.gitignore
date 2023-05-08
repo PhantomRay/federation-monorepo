@@ -1,0 +1,5 @@
+# compiled output
+/dist
+
+# TODO: move to /temp
+temp.json

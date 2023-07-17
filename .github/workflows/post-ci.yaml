@@ -1,10 +1,11 @@
-name: '[core] Lint and test'
+name: '[Post] Lint and test'
 
 on:
   push:
     paths:
-      - 'apps/core/**'
-      - '.github/workflows/core-*.yaml'
+      - 'apps/post/**'
+      - 'packages/**'
+      - '.github/workflows/post-*.yaml'
 
 jobs:
   build:
@@ -30,7 +31,7 @@ jobs:
           cache-dependency-path: './pnpm-lock.yaml'
 
       - run: pnpm install --ignore-scripts
-      - run: pnpm --filter core lint
-      - run: pnpm --filter core test
+      - run: pnpm --filter post lint
+      - run: pnpm --filter post test
         env:
           CI: true

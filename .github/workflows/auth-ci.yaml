@@ -1,9 +1,10 @@
-name: '[auth] Lint and test'
+name: '[Auth] Lint and test'
 
 on:
   push:
     paths:
       - 'apps/auth/**'
+      - 'packages/**'
       - '.github/workflows/auth-*.yaml'
 
 jobs:

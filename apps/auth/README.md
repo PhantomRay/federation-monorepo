@@ -2,6 +2,11 @@
 
 REST API based auth service backed by Postgresql.
 
+## Prerequisites
+
+- PostgreSQL is required for auth service. Use `docker/docker-compose.yml` to start one.
+- Run `pnpm --filter auth migrate:dev` to initialise the database.
+
 ## Running the app
 
 ```bash

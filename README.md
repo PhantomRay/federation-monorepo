@@ -1,6 +1,12 @@
 # GQL federation monorepo
 
-This is a monorepo for a GraphQL federation project. The following tools are used:
+This is a monorepo for a GraphQL federation project. it contains the following apps:
+
+- auth - rest api [README](apps/auth/README.md)
+- user - subgraph [README](apps/user/README.md)
+- post - subgraph [README](apps/post/README.md)
+
+The following tools are used:
 
 - [nestjs](https://nestjs.com/) for backend framework
 - [apollo-server](https://www.apollographql.com/docs/apollo-server/) for GraphQL server
@@ -36,11 +42,9 @@ This is a monorepo for a GraphQL federation project. The following tools are use
 └── turbo.json # turborepo setup
 ```
 
-This monorepo contains the following apps:
+Any code changes made to individual app or package will trigger a separate Github Actions workflow.
 
-- [auth](apps/auth/README.md)
-- [user](apps/user/README.md)
-- [post](apps/post/README.md)
+![Github Actions](./docs/img/github-actions.png)
 
 Shared configurations are located in `packages/config*`.
 
@@ -52,24 +56,30 @@ pnpm i -w
 
 ## Generate supergraph schema
 
-First, start all subgraphs
+**Start all services**
+
+Please note, there are prerequisites for [auth service](apps/auth/README.md).
 
 ```sh
+
 pnpm dev
 ```
 
-Generate supergraph
+**Generate supergraph**
+
+[Rover CLI](https://www.apollographql.com/docs/rover/) is used to generate supergraph schema. Configuration file is located at `scripts/rover.config.yaml`.
+
+File generated to `scripts/supergraph.gql`
 
 ```sh
+
 pnpm supergraph
 ```
 
 ## Start Apollo Router
 
+Start Apollo Router in hot-reload mode. Changes made to router.yaml or supergraph.gql will be automatically reloaded.
+
 ```sh
 pnpm start:router
 ```
-
-## Database
-
-PostgreSQL is required for auth service. Use `docker/docker-compose.yml` to start one. Then run `pnpm --filter auth migrate:dev` to initialise database.

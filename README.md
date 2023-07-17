@@ -72,9 +72,8 @@ pnpm dev
 
 [Rover CLI](https://www.apollographql.com/docs/rover/) is used to generate supergraph schema. Configuration file is located at `scripts/rover.config.yaml`.
 
-File generated to `scripts/supergraph.gql`
-
 ```sh
+# save to `scripts/supergraph.gql`
 pnpm supergraph
 ```
 
@@ -104,7 +103,7 @@ type Post {
   user: User
 }
 
-extend type User {
+type User {
   id: ID!
   posts: [Post]
 }

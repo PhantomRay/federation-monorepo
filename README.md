@@ -48,11 +48,15 @@ Any code changes made to individual app or package will trigger a separate Githu
 
 Shared configurations are located in `packages/config*`.
 
-## Dependencies
+## Prerequisites
+
+Dependencies
 
 ```sh
 pnpm i -w
 ```
+
+Add `.env.local` to auth, user and post apps. See `.env.example` for reference.
 
 ## Generate supergraph schema
 
@@ -61,7 +65,6 @@ pnpm i -w
 Please note, there are prerequisites for [auth service](apps/auth/README.md).
 
 ```sh
-
 pnpm dev
 ```
 
@@ -72,7 +75,6 @@ pnpm dev
 File generated to `scripts/supergraph.gql`
 
 ```sh
-
 pnpm supergraph
 ```
 
@@ -82,4 +84,65 @@ Start Apollo Router in hot-reload mode. Changes made to router.yaml or supergrap
 
 ```sh
 pnpm start:router
+```
+
+## User subgraph
+
+```graphql
+type User {
+  id: ID!
+  name: String!
+}
+```
+
+## Post subgraph
+
+```graphql
+type Post {
+  id: ID!
+  title: String!
+  user: User
+}
+
+extend type User {
+  id: ID!
+  posts: [Post]
+}
+```
+
+## Sandbox
+
+Sandbox is available for supergraph and subgraphs.
+
+- supergrah http://localhost:4000/graphql
+- User http://localhost:4001/graphql
+- Post http://localhost:4002/graphql
+
+**Supergraph Sandbox**
+
+![Supergraph Sandbox](./docs/img/sandbox-supergraph.png)
+
+**Subgraph Sandbox**
+
+![Subgraph Sandbox](./docs/img/sandbox-subgraph.png)
+
+Run the following query to get user with posts in supergraph sandbox.
+
+```graphql
+query getUserWithPosts($userId: ID!) {
+  getUser(id: $userId) {
+    id
+    name
+    posts {
+      id
+      title
+    }
+  }
+}
+```
+
+```json
+{
+  "userId": "1"
+}
 ```

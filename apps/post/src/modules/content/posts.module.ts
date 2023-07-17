@@ -11,6 +11,7 @@ import { ConfigService } from '@/config/config.service';
 
 import { PostService } from './post.service';
 import { PostsResolver } from './posts.resolver';
+import { UsersResolver } from './user.resolver';
 
 const { NODE_ENV } = process.env;
 
@@ -35,7 +36,7 @@ const { NODE_ENV } = process.env;
       plugins: [...(NODE_ENV === 'local' ? [ApolloServerPluginLandingPageLocalDefault({ embed: true })] : [])]
     })
   ],
-  providers: [ConfigService, PostService, PostsResolver],
+  providers: [ConfigService, PostService, PostsResolver, UsersResolver],
   exports: []
 })
 export class PostModule {}

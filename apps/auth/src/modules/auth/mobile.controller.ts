@@ -13,8 +13,6 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { plainToClass } from 'class-transformer';
-import { validateOrReject } from 'class-validator';
 
 import { ConfigService } from '@/config/config.service';
 import { AuthService } from '@/domain/services/auth';
@@ -36,14 +34,6 @@ export class MobileController {
   @HttpCode(200)
   @Post('otp')
   async sendOtp(@Req() req, @Body() body: RequestMobileOtpDTO) {
-    body = plainToClass(RequestMobileOtpDTO, body);
-
-    try {
-      await validateOrReject(body);
-    } catch (err) {
-      throw new BadRequestException(err);
-    }
-
     const code = await this.authService.generateMobileOtp({
       userId: req.user.id,
       mobile: body.mobile,
@@ -61,14 +51,6 @@ export class MobileController {
   @HttpCode(200)
   @Post('verify')
   async verify(@Req() req, @Body() body: MobileOtpCodeDTO) {
-    body = plainToClass(MobileOtpCodeDTO, body);
-
-    try {
-      await validateOrReject(body);
-    } catch (err) {
-      throw new BadRequestException(err);
-    }
-
     const { type, code } = body;
 
     const userId = await this.authService.verifyMobileOtp({ userId: req.user.id, code, type });

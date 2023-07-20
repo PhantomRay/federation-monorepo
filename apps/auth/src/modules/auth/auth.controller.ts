@@ -1,6 +1,5 @@
 import { getClientIP, parseHeaders } from '@incognito/toolkit/dist/utils';
 import {
-  BadRequestException,
   Body,
   Controller,
   Headers,
@@ -14,8 +13,6 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { plainToClass } from 'class-transformer';
-import { validateOrReject } from 'class-validator';
 
 import { AuthService } from '@/domain/services/auth';
 
@@ -40,13 +37,6 @@ export class AuthController {
     email: string;
     id: string;
   }> {
-    body = plainToClass(SignupDTO, body);
-    try {
-      await validateOrReject(body);
-    } catch (err) {
-      throw new BadRequestException(err);
-    }
-
     const { email, password } = body;
 
     const user = await this.authService.signnup({ email, password });
@@ -63,13 +53,6 @@ export class AuthController {
   @HttpCode(200)
   @Post('signin')
   async signin(@Req() req, @Body() body: EmailSignInDTO, @Headers() headers): Promise<any> {
-    body = plainToClass(EmailSignInDTO, body);
-    try {
-      await validateOrReject(body);
-    } catch (err) {
-      throw new BadRequestException(err);
-    }
-
     body.meta = parseHeaders(headers);
     body.meta.ip = getClientIP(req);
 
@@ -132,13 +115,6 @@ export class AuthController {
   @HttpCode(200)
   @Post('deactivate')
   async deactivate(@Req() req, @Body() body: DeactivateDTO) {
-    body = plainToClass(DeactivateDTO, body);
-    try {
-      await validateOrReject(body);
-    } catch (err) {
-      throw new BadRequestException(err);
-    }
-
     await this.authService.deactivateUser(req.user.id, body.password);
     return {};
   }

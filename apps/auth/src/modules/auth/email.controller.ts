@@ -29,14 +29,6 @@ export class EmailController {
   @HttpCode(200)
   @Post('otp')
   async sendOtp(@Req() req, @Body() body: RequestEmailOtpDTO) {
-    body = plainToClass(RequestEmailOtpDTO, body);
-
-    try {
-      await validateOrReject(body);
-    } catch (err) {
-      throw new BadRequestException(err);
-    }
-
     const _data = await this.authService.generateEmailOtp({ email: body.email, type: body.type });
 
     if (_data?.code) {

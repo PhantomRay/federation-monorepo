@@ -113,7 +113,7 @@ type User {
 
 Sandbox is available for supergraph and subgraphs.
 
-- supergrah http://localhost:4000/graphql
+- Supergrah http://localhost:4000/graphql
 - User http://localhost:4001/graphql
 - Post http://localhost:4002/graphql
 

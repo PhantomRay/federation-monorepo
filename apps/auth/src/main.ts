@@ -13,7 +13,14 @@ import { PrismaService } from './services/prisma.service';
 async function bootstrap() {
   const { config }: ConfigService = new ConfigService();
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true, // Automatically transform payloads to the DTO class
+      whitelist: true // Exclude non-decorated properties from the payload
+      // forbidNonWhitelisted: true
+    })
+  );
 
   app.useGlobalFilters(new HttpExceptionFilter());
 
